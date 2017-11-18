@@ -1,0 +1,12 @@
+#+TITLE: Vernacular: Minimal Programming Language Grammar Typesetting
+
+This package provides a minimal set of tools to typeset programming language grammars.
+
+* Example Usage
+
+#+BEGIN_SRC latex
+  \begin{grammar}
+    \GrammarLine[Expressions]{e}{\texttt{id} \alt e \; e \alt v}
+    \GrammarLine[Values]{v}{\lambda x \ldotp e}
+  \end{grammar}
+#+END_SRC

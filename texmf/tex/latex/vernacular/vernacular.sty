@@ -1,0 +1,44 @@
+% -*- eval: (outline-minor-mode); -*-
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vernacular}[2017/09/15 Package for typesetting language grammars.]
+
+% * Requirements
+
+\RequirePackage{xparse}
+\RequirePackage{xifthen}
+
+% * Primary Definitions
+% ** The Grammar Environment
+\DeclareDocumentEnvironment{grammar}{}{%
+  \begin{math}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{array}{@{} r c l r@{}}
+}{%
+    \end{array}
+  \end{math}
+}
+
+% ** Grammar Elements
+\DeclareDocumentCommand{\GrammarLine}{omm}{#2 & ::= & #3 & \IfValueT{#1}{\textit{#1}} \\}
+\DeclareExpandableDocumentCommand{\GrammarSection}{m}{\multicolumn{4}{c}{\textbf{#1}} \\}
+\DeclareMathOperator{\alt}{\mid}
+
+% * Grammar Elements
+
+\DeclareDocumentCommand{\GrammarTerminal}{m}{\texttt{#1}}
+\DeclareDocumentCommand{\GrammarNonTerminal}{m}{#1}
+\DeclareDocumentCommand{\GrammarOperator}{m}{\operatorname{#1}}
+
+\DeclareDocumentCommand{\DeclareGrammarTerminal}{mm}{%
+  \DeclareDocumentCommand{#1}{}{\GrammarTerminal{#2}}
+}
+
+\DeclareDocumentCommand{\DeclareGrammarNonTerminal}{mm}{%
+  \DeclareDocumentCommand{#1}{}{\GrammarNonTerminal{#2}}
+}
+
+\DeclareDocumentCommand{\DeclareGrammarOperator}{mm}{%
+  \DeclareMathOperator{#1}{#2}
+}
+
+\endinput

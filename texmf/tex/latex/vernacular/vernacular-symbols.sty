@@ -1,0 +1,33 @@
+% -*- eval: (outline-minor-mode); -*-
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vernacular-symbols}[2017/10/29 Common symbol definitions for grammar typesetting.]
+
+% * Requirements
+% * Delimiters
+
+% Wrap content in left and right delimiters. If starred, use \left and \right.
+% Also removes any trailing comma (plus whitespace) at the end of a delimited segment, for easy
+% copy-paste.
+\DeclareDocumentCommand{\DeclareDelimitingCommand}{mmm}{%
+  \DeclareDocumentCommand{#1}{sm}{%
+    \IfBooleanTF{##1}{\left#2\RemoveTrailingComma{##2}\right#3}{#2\RemoveTrailingComma{##2}#3}
+  }
+}
+
+\ExplSyntaxOn
+\DeclareDocumentCommand{\RemoveTrailingComma}{+m}{
+  \tl_set:Nn \l_tl_arg {#1}
+  \regex_replace_once:nnN{,\s*$}{}{\l_tl_arg} %$ -- Hack to prevent font-lock-color bleed.
+  \l_tl_arg
+}
+\ExplSyntaxOff
+
+\DeclareDelimitingCommand{\TupleOf}{\langle}{\rangle}
+\DeclareDelimitingCommand{\SetOf}{\{}{\}}
+\DeclareDelimitingCommand{\ListOf}{\lbrack}{\rbrack}
+
+% * Standard Syntactic Elements
+\DeclareGrammarOperator{\MapsTo}{\mapsto}
+
+
+\endinput
